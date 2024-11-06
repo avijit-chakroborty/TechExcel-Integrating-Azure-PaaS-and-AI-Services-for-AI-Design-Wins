@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using Microsoft.Data.SqlClient;
 using ContosoSuitesWebAPI.Entities;
+using System.Diagnostics;
 
 namespace ContosoSuitesWebAPI.Services;
 
@@ -15,8 +16,11 @@ public class DatabaseService : IDatabaseService
     public async Task<IEnumerable<Hotel>> GetHotels()
     {
         var sql = "SELECT HotelID, HotelName, City, Country FROM dbo.Hotel";
+
+        var connStr = Environment.GetEnvironmentVariable("SQLAZURECONNSTR_ContosoSuites");
+        System.Console.WriteLine("SQLAZURECONNSTR_ContosoSuites: " + connStr);
         using var conn = new SqlConnection(
-            connectionString: Environment.GetEnvironmentVariable("SQLAZURECONNSTR_ContosoSuites")!
+            connectionString: connStr!
         );
         conn.Open();
         using var cmd = new SqlCommand(sql, conn);
@@ -43,9 +47,12 @@ public class DatabaseService : IDatabaseService
     public async Task<IEnumerable<Booking>> GetBookingsForHotel(int hotelId)
     {
         var sql = "SELECT BookingID, CustomerID, HotelID, StayBeginDate, StayEndDate, NumberOfGuests FROM dbo.Booking WHERE HotelID = @HotelID";
+        var connStr = Environment.GetEnvironmentVariable("SQLAZURECONNSTR_ContosoSuites");
+        System.Console.WriteLine("SQLAZURECONNSTR_ContosoSuites: " + connStr);
         using var conn = new SqlConnection(
-            connectionString: Environment.GetEnvironmentVariable("SQLAZURECONNSTR_ContosoSuites")!
+            connectionString: connStr!
         );
+
         conn.Open();
         using var cmd = new SqlCommand(sql, conn);
         cmd.Parameters.AddWithValue("@HotelID", hotelId);
@@ -74,9 +81,13 @@ public class DatabaseService : IDatabaseService
     public async Task<IEnumerable<Booking>> GetBookingsByHotelAndMinimumDate(int hotelId, DateTime dt)
     {
         var sql = "SELECT BookingID, CustomerID, HotelID, StayBeginDate, StayEndDate, NumberOfGuests FROM dbo.Booking WHERE HotelID = @HotelID AND StayBeginDate >= @StayBeginDate";
+
+        var connStr = Environment.GetEnvironmentVariable("SQLAZURECONNSTR_ContosoSuites");
+        System.Console.WriteLine("SQLAZURECONNSTR_ContosoSuites: " + connStr);
         using var conn = new SqlConnection(
-            connectionString: Environment.GetEnvironmentVariable("SQLAZURECONNSTR_ContosoSuites")!
+            connectionString: connStr!
         );
+
         conn.Open();
         using var cmd = new SqlCommand(sql, conn);
         cmd.Parameters.AddWithValue("@HotelID", hotelId);
