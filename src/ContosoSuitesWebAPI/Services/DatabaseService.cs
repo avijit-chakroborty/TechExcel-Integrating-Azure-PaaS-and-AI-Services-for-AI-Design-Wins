@@ -18,7 +18,7 @@ public class DatabaseService : IDatabaseService
         var sql = "SELECT HotelID, HotelName, City, Country FROM dbo.Hotel";
 
         var connStr = Environment.GetEnvironmentVariable("SQLAZURECONNSTR_ContosoSuites");
-        System.Console.WriteLine("SQLAZURECONNSTR_ContosoSuites: " + connStr);
+        // System.Console.WriteLine("SQLAZURECONNSTR_ContosoSuites: " + connStr);
         using var conn = new SqlConnection(
             connectionString: connStr!
         );
@@ -48,7 +48,7 @@ public class DatabaseService : IDatabaseService
     {
         var sql = "SELECT BookingID, CustomerID, HotelID, StayBeginDate, StayEndDate, NumberOfGuests FROM dbo.Booking WHERE HotelID = @HotelID";
         var connStr = Environment.GetEnvironmentVariable("SQLAZURECONNSTR_ContosoSuites");
-        System.Console.WriteLine("SQLAZURECONNSTR_ContosoSuites: " + connStr);
+        // System.Console.WriteLine("SQLAZURECONNSTR_ContosoSuites: " + connStr);
         using var conn = new SqlConnection(
             connectionString: connStr!
         );
@@ -83,7 +83,7 @@ public class DatabaseService : IDatabaseService
         var sql = "SELECT BookingID, CustomerID, HotelID, StayBeginDate, StayEndDate, NumberOfGuests FROM dbo.Booking WHERE HotelID = @HotelID AND StayBeginDate >= @StayBeginDate";
 
         var connStr = Environment.GetEnvironmentVariable("SQLAZURECONNSTR_ContosoSuites");
-        System.Console.WriteLine("SQLAZURECONNSTR_ContosoSuites: " + connStr);
+        // System.Console.WriteLine("SQLAZURECONNSTR_ContosoSuites: " + connStr);
         using var conn = new SqlConnection(
             connectionString: connStr!
         );
